@@ -12,9 +12,9 @@
 	justify-content: center;
 }
 
-.clock{
+#timer-time{
 	color: #fff;
-	font-size: 4rem;
+	font-size: 4rem; 
 	padding: 3rem;
 }
 
