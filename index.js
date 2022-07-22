@@ -1,35 +1,50 @@
-const clock = document.querySelector(".clock");
 
-let sec = 0,
-	min = 0,
-	hr = 0,
-	intervalId;
+var increaseTime = time => time + 1;
+var interval;
+var minute;
+var seconds;
 
-	const startStopWatch = () => {
+//when start button clicked
+var startTimer = () => {
 
-		intervalId = setInterval(() => {
+	var currentTime = document.getElementById("timer-time").innerHTML; //00:00
+	minute = parseInt(currentTime.split(":")[0]);
+	seconds = parseInt(currentTime.split(":")[1]);
+	currentTime = minute * 60 + seconds;
+	currentTime = increaseTime(currentTime);
+	minute = Math.floor(currentTime / 60);
+	seconds = currentTime % 60;
+	currentTime = minute.toString().padStart(2 ,'0').concat(":").concat(seconds.toString().padStart(2, '0'));
+	console.log(currentTime); 
+	document.getElementById("timer-time").innerHTML = currentTime;   
 
-			if(sec<59){
-				sec++;
-			}else if(min>=59){
-				hr++;
-				min = 0;
-				sec = 0;
-			}else {
-				sec = 0;
-				min++;
-			}
+	interval = setTimeout(startTimer, '1000');       //call back function because a function called inside it
 
-			const hour = hr.toString().padStart(2, "0");
-			const minute = min.toString().padStart(2, "0");
-			const second = sec.toString().padStart(2, "0");
+}
 
-			clock.innerHTML = `${hour}:${minute}:${second}`;
+//when stop button clicked
+var stopTimer = () => 
+{
+	clearInterval(interval)
+}
 
-		}, 1000)
+var resetTimer = () =>
+{
+	minute = "00";
+	seconds = "00";
+	currentTime = minute.toString().padStart(2 ,'0').concat(":").concat(seconds.toString().padStart(2, '0'));
+	console.log(currentTime); 
+	document.getElementById("timer-time").innerHTML = currentTime;   
+	clearInterval(interval)
 
-	};
+}
 
-	const stopStopWatch = () => {
-		clearInterval(intervalId);
-	};
+
+
+var start = document.getElementById("timer-button-start");
+var stops = document.getElementById("timer-button-stop");
+var reset = document.getElementById("timer-button-reset");
+
+start.addEventListener('click', startTimer);
+stops.addEventListener('click', stopTimer);
+reset.addEventListener('click', resetTimer);
