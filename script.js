@@ -1,4 +1,3 @@
-
 var increaseTime = time => time + 1;
 var interval;
 var minute;
